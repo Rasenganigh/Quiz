@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <marquee bgcolor="black" direction="left" scrollamount="10" width="100%" height="20">
+                      <font style="font size="60px" "font color="white">Are you ready! Think Sharp and choose the answer</font>
+           </marquee>
+  <body bgcolor="green">
+  <title>Quiz</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    #quiz {
+      width: 600px;
+      margin: 0 auto;
+    }
+    #question {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+    #answers {
+      list-style-type: none;
+      padding: 0;
+    }
+    #answers li {
+      padding: 10px;
+      border: 1px solid ;
+      margin-bottom: 5px;
+    }
+    #answers li:hover {
+      background-color:  gray;
+    }
+    #score {
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <div id="quiz">
+    <h1>Quiz</h1>
+    <div id="question"></div>
+    <ul id="answers"></ul>
+    <div id="score"></div>
+  </div>
+  <script>
+    // Questions
+    const questions = [
+      {
+        question: "What is the capital of France?",
+        answers: {
+          a: "Paris",
+          b: "London",
+          c: "Berlin"
+        },
+        correctAnswer: "a"
+      },
+      {
+        question: "What is the capital of Italy?",
+        answers: {
+          a: "Rome",
+          b: "Paris",
+          c: "Madrid"
+        },
+        correctAnswer: "a"
+      },
+      {
+        question: "What is the capital of Spain?",
+        answers: {
+          a: "Rome",
+          b: "Paris",
+          c: "Madrid"
+        },
+        correctAnswer: "c"
+      },
+      {
+        question: "Where is statue of Unity is located?",
+        answers: {
+          a: "America",
+          b: "India",
+          c: "Brazil"
+        },
+        correctAnswer: "b"
+      },
+      {
+        question: "Who is the creater of this HTML?",
+        answers: {
+          a: "Ayan",
+          b: "Jerry",
+          c: "Nilesh"
+        },
+        correctAnswer: "a"
+      }
+    ];
+
+    // Variables
+    const quizContainer = document.getElementById("quiz");
+    const questionElement = document.getElementById("question");
+    const answersElement = document.getElementById("answers");
+    const scoreElement = document.getElementById("score");
+    let currentQuestion = 0;
+    let score = 0;
+
+    // Functions
+    function showQuestion() {
+      const question = questions[currentQuestion];
+      questionElement.innerText = question.question;
+      answersElement.innerHTML = "";
+      for (const key in question.answers) {
+        const answer = question.answers[key];
+        answersElement.innerHTML += `
+          <li>
+            <input type="radio" name="answer" value="${key}">
+            ${answer}
+          </li>
+        `;
+      }
+    }
+
+    function handleAnswer() {
+      const answer = document.querySelector("input[name=answer]:checked").value;
+      if (answer === questions[currentQuestion].correctAnswer) {
+        score++;
+      }
+      currentQuestion++;
+      if (currentQuestion === questions.length) {
+        showScore();
+      } else {
+        showQuestion();
+      }
+    }
+
+    function showScore() {
+      quizContainer.innerHTML = `
+        <h2>You got ${score}/${questions.length} questions correct!</h2>
+      `;
+    }
+
+    // Event Listeners
+    document.addEventListener("DOMContentLoaded", showQuestion);
+    answersElement.addEventListener("change", handleAnswer);
+  </script>
+  <br><br>
+</body>
+</html>
